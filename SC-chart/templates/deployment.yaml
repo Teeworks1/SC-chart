@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-deployment
+  labels:
+    app: {{ .Values.app.name }}
+    env: {{ .Values.app.labels.env }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+        env: {{ .Values.app.labels.env }}
+    spec:
+      initContainers:
+{{- range .Values.initContainers }}
+        - name: {{ .name }}
+          image: {{ .image }}
+          command: {{ .command | toJson }}
+{{- end }}
+      containers:
+{{- range .Values.containers }}
+        - name: {{ .name }}
+          image: {{ .image }}
+          ports:
+{{- range .ports }}
+            - name: {{ .name }}
+              containerPort: {{ .containerPort }}
+{{- end }}
+{{- end }}
+      resources:
+        limits:
+          memory: {{ .Values.resources.limits.memory }}
+          cpu: {{ .Values.resources.limits.cpu }}
+        requests:
+          memory: {{ .Values.resources.requests.memory }}
+          cpu: {{ .Values.resources.requests.cpu }}
