@@ -24,10 +24,10 @@ The script only includes vulnerabilities of Medium or higher severity.
 The output CSV is named with the current date to avoid overwriting.
 
 
-Future Improvements
-Add parallel scanning for faster processing.
-Support other vulnerability scanners (e.g., Trivy).
-Implement more advanced filtering and error logging.
+Areas of Improvements if i had more time would be 
+1. Add parallel scanning for faster processing.
+2. Modify the code to Support the other vulnerability scanner (trivy) .
+3. Implement more advanced filtering and error logging technique within the code base.
 
 The directory structure of the repo
 
