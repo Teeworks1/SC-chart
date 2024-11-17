@@ -1,0 +1,33 @@
+replicaCount: 2
+
+app:
+  name: my-app
+  labels:
+    env: production
+
+containers:
+  - name: app-container
+    image: nginx:1.21.6
+    ports:
+      - name: http
+        containerPort: 80
+  - name: sidecar-container
+    image: busybox
+    command: ["sh", "-c", "while true; do echo hello; sleep 10; done"]
+
+initContainers:
+  - name: init-container
+    image: busybox
+    command: ["sh", "-c", "echo Preparing environment...; sleep 5"]
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+
+service:
+  type: ClusterIP
+  port: 80
