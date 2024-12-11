@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Teeworks1/SC-chart.git
     targetRevision: HEAD
-    path: SC-chart
+    path: SC-chart/templates
   destination:
     server: https://kubernetes.default.svc
     namespace: test-app
