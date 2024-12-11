@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-app-argo-application
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Teeworks1/SC-chart.git
+    targetRevision: HEAD
+    path: SC-chart
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test-app
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    - PruneLast=true
+    #- PrunePropagationPolicy=foreground
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
+    retry:
+      limit: 2
