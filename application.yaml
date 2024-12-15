@@ -11,6 +11,9 @@ spec:
     repoURL: https://github.com/Teeworks1/SC-chart.git
     targetRevision: HEAD
     path: SC-chart/templates
+    helm:
+      valueFiles:
+       - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: test-app
