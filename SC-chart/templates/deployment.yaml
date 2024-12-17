@@ -28,9 +28,9 @@ spec:
           image: {{ .image }}
           ports:
 {{- range .ports }}
-            - name: {{ .name }}
-              containerPort: {{ .containerPort }}
-{{- end }}
+#             - name: {{ .name }}
+#               containerPort: {{ .containerPort }}
+# {{- end }}
 {{- end }}
       resources:
         limits:
