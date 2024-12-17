@@ -10,9 +10,9 @@ containers:
     ports:
       - name: http
         containerPort: 80
-  - name: sidecar-container
-    image: busybox
-    command: ["sh", "-c", "while true; do echo hello; sleep 10; done"]
+  # - name: sidecar-container
+  #   image: busybox
+  #   command: ["sh", "-c", "while true; do echo hello; sleep 10; done"]
 
 initContainers:
   - name: init-container
