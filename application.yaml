@@ -12,6 +12,7 @@ spec:
     targetRevision: HEAD
     path: SC-chart/templates
     helm:
+      releaseName: Helm-Release
       valueFiles:
        - values.yaml
   destination:
