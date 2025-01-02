@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: test-app-argo-application
+  name: sc-chart
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,9 +9,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Teeworks1/SC-chart.git
-    targetRevision: HEAD
-    path: SC-chart/templates
+    #targetRevision: HEAD
+    targetRevision: master
+    path: sc-chart
     helm:
+      releaseName: SC-chart
       valueFiles:
        - values.yaml
   destination:
@@ -21,7 +23,8 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - PruneLast=true
-    #- PrunePropagationPolicy=foreground
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
     automated:
       selfHeal: true
       prune: true

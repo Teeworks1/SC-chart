@@ -1,5 +1,5 @@
 apiVersion: v2
-name: SC-chart
+name: sc-chart
 description: A Helm chart with multiple containers and init containers
 type: application
 version: 0.1.0
