@@ -11,9 +11,9 @@ spec:
     repoURL: https://github.com/Teeworks1/SC-chart.git
     #targetRevision: HEAD
     targetRevision: master
-    path: sc-chart
+    path: SC-chart
     helm:
-      releaseName: SC-chart
+      releaseName: sc-chart
       valueFiles:
        - values.yaml
   destination:
