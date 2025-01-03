@@ -1,6 +1,7 @@
-replicaCount: 1
+replicaCount: 2
 app:
   name: my-app
+  namespace: test-app
   labels:
     env: production
 
