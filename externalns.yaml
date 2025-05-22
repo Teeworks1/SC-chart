@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-bridge
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: my-app-service.test-app.svc.cluster.local

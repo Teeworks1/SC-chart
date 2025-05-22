@@ -1,9 +1,30 @@
-replicaCount: 3
+replicaCount: 1
 app:
   name: my-app
   namespace: test-app
   labels:
     env: production
+  env: production
+  logLevel: info
+  db:
+    host: localhost
+    port: 5432
+  # config:
+  #   APP_ENV: production
+  #   LOG_LEVEL: info
+  #   DB_HOST: localhost
+  #   DB_PORT: 5432
+  # configMap:
+  #   APP_ENV: production
+  #   LOG_LEVEL: info
+  #   DB_HOST: localhost
+  #   DB_PORT: 5432
+  # configMapName: my-app-config
+  # configMapKey: APP_ENV
+  # configMapValue: production
+  # configMapMountPath: /mnt/config
+  # configMapMountName: my-app-config
+  configMapMountKey: APP_ENV
 
 containers:
   - name: app-container
@@ -11,9 +32,9 @@ containers:
     ports:
       - name: http
         containerPort: 80
-  # - name: sidecar-container
-  #   image: busybox
-  #   command: ["sh", "-c", "while true; do echo hello; sleep 10; done"]
+  - name: sidecar-container
+    image: busybox
+    command: ["sh", "-c", "while true; do echo hello; sleep 10; done"]
 
 initContainers:
   - name: init-container
@@ -31,3 +52,10 @@ resources:
 service:
   type: ClusterIP
   port: 80
+  
+pvc:
+  name: azure-storage
+  accessModes:
+    - ReadWriteOnce
+  storage: 5Gi
+  storageClassName: standard

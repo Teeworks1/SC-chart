@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-container-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .name }}
+    env: {{ .Values.app.labels.env }}
+data:
+  APP_ENV: {{ .Values.app.env | quote }}
+  LOG_LEVEL: {{ .Values.app.logLevel | quote }}
+  DB_HOST: {{ .Values.app.db.host | quote }}
+  DB_PORT: {{ .Values.app.db.port | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sidecar-container-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .name }}
+    env: {{ .Values.app.labels.env }}
+data:
+  APP_ENV: {{ .Values.app.env | quote }}
+  LOG_LEVEL: {{ .Values.app.logLevel | quote }}

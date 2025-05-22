@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.app.name }}-deployment
-  namespace: {{ .Values.app.namespace}}
+  namespace: {{ .Values.app.namespace }}
   labels:
     app: {{ .Values.app.name }}
     env: {{ .Values.app.labels.env }}
@@ -17,11 +17,18 @@ spec:
         app: {{ .Values.app.name }}
         env: {{ .Values.app.labels.env }}
     spec:
+      volumes:
+        - name: azure-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc.name }}
       initContainers:
 {{- range .Values.initContainers }}
         - name: {{ .name }}
           image: {{ .image }}
           command: {{ .command | toJson }}
+          volumeMounts:
+            - name: azure-storage
+              mountPath: /mnt/azurefile
 {{- end }}
       containers:
 {{- range .Values.containers }}
@@ -32,11 +39,17 @@ spec:
             - name: {{ .name }}
               containerPort: {{ .containerPort }}
 {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .name }}-config
+          volumeMounts:
+            - name: azure-storage
+              mountPath: /mnt/data
+          resources:
+            limits:
+              memory: {{ $.Values.resources.limits.memory }}
+              cpu: {{ $.Values.resources.limits.cpu }}
+            requests:
+              memory: {{ $.Values.resources.requests.memory }}
+              cpu: {{ $.Values.resources.requests.cpu }}
 {{- end }}
-      resources:
-        limits:
-          memory: {{ .Values.resources.limits.memory }}
-          cpu: {{ .Values.resources.limits.cpu }}
-        requests:
-          memory: {{ .Values.resources.requests.memory }}
-          cpu: {{ .Values.resources.requests.cpu }}
